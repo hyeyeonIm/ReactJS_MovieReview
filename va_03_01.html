@@ -1,0 +1,74 @@
+<!--State : 데이터가 저장되는 곳 -->
+<!-- counter를 state로 만들 수 있음 -->
+
+<!DOCTYPE html>
+<html lang="en">
+    <body>
+        <!-- body안에 React element 가져다 주는 방법 -->
+        <div id="root"></div> 
+    </body>
+    <!-- React JS  Import ; React JS : interactivity의 원동력 -->
+    <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+    <!-- react-dom은 모든 react element들을 html body에 둘 수 있게 해줌 -->
+    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+    <!--JSX를 사용하기 위한 babel가져오기-->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <script type="text/babel"> // JSX를 이해시키기 위한 type
+        const root = document.getElementById("root");
+
+        /**
+        Counter를 구현하는 방법 1 : 어려운 방법
+        let counter = 0;
+        function countUp() {
+            counter = counter + 1;
+            render(); // 내용 업데이트를 위해 리렌더링
+        }
+
+        // Render 함수 추가
+        function render() {
+            ReactDOM.render(<Container />, root);
+        }
+
+        // JSX를 이용한 코드2 (createElement 사용하지 않기)
+        // 단 컴포넌트의 첫글자는 반드시 대문자여야 함!!!!! ex) Title, Button
+        const Container = () => (
+            <div>
+
+            <h3>Total clicks: {counter}</h3>
+            <button onClick={countUp}>Click me</button>
+
+            </div>
+        );
+        render();
+        // ReactDOM.render(<Container />, root); // React element들을 root div에서 보여주라는 뜻
+        **/
+
+        // Counter를 구현하는 방법 2 : 쉬운 방법 ; 리렌더링을 신경쓰지 않아도 되는 방법
+        // React 어플리케이션을 다룰 때, State에 데이터를 담으면 됨!!
+        function App() {
+            let [counter, setCounter] = React.useState(0);
+            // modifier 함수를 가지고 state를 변경할 때 컴포넌트가 재생성됨
+            const onClick = () => {
+                // setCounter(counter + 1); // 함수 말고 특정 문자열이나 숫자로 set할 수도 있음
+                
+                // 이전 값을 이용해서 현재 값을 계산해내는 다른 방법
+                setCounter((current) => current + 1); // 이 current가 확실히 현재 값이라는 걸 보장
+            };
+            
+            // console.log(data); // [undefined, ƒ]가 나오게 되는데 
+            // undefined : data, f : data를 바꿀 때 사용하는 함수
+            return (
+                <div>
+                    <h3>Total clicks: {counter}</h3>
+                    <button onClick={onClick}>Click me</button>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, root);
+
+
+    </script>
+        
+</html>

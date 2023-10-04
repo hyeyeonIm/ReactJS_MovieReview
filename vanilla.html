@@ -1,0 +1,150 @@
+<!--Props-->
+
+<!DOCTYPE html>
+<html lang="en">
+    <body>
+        <!-- body안에 React element 가져다 주는 방법 -->
+        <div id="root"></div> 
+    </body>
+    <!-- React JS  Import ; React JS : interactivity의 원동력 -->
+    <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+    <!-- react-dom은 모든 react element들을 html body에 둘 수 있게 해줌 -->
+    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+    <!--JSX를 사용하기 위한 babel가져오기-->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <script type="text/babel"> // JSX를 이해시키기 위한 type
+        
+        function MinutesToHours() {
+            const [amount, setAmount] = React.useState();
+            const [inverted, setinverted] = React.useState();
+
+            const onChange = (event) => {
+                setAmount(event.target.value); // target : 방금 바뀐 input
+                // console.log(event.target.value); // target : 방금 바뀐 input
+            };
+            const reset = () => setAmount(0);
+            const onInvert = () => {
+                reset();
+                setinverted((current) => (!current)); // inverted이 true라면 (!inverted)는 flase
+            }
+            // label을 input에 연결시키기 위한 for : but, for는 Javascript언어
+            // 따라서 htmlfor라고 써야 함.
+            return (
+                <div>
+                    <div>
+                        <label htmlfor="minutes">Minutes</label> 
+                        <input 
+                            value={inverted ? amount*60 : amount} // input의 value는 state의 value와 같아짐
+                            id="minutes" 
+                            placeholder="Minutes" 
+                            type="number" 
+                            onChange = {onChange} // input의 이벤트 감지
+                            // disabled = {inverted === true} // inverted가 true라면 disabled
+                            disabled = {inverted}
+                        />
+                    </div>
+
+                    <h4>You want to convert {amount}</h4>
+
+                    <div>
+                        <label htmlfor="hours">Houres</label>
+                        <input 
+                            // inverted리면 state에 있는 값을 그대로 보여주기
+                            value={inverted ? amount : Math.round(amount/60)} // 반올림 해줌
+                            id="hours" 
+                            placeholder="Hours" 
+                            type="number"
+                            onChange = {onChange} // input의 이벤트 감지
+                            // disabled = {inverted === false} // inverted가 false라면 disabled
+                            disabled = {!inverted}
+                        />
+                    </div>
+                    <button onClick={reset}>Reset</button>
+                    <button onClick={onInvert}>{inverted ? "Turn back" : "Invert"}</button>
+                </div>
+            );
+        }
+
+        function KmToMiles() {
+            // km -> Miles : amount / 1.609
+            // Miles -> km : amount * 1.609
+            const [amount, setAmount] = React.useState();
+            const [inverted, setinverted] = React.useState();
+
+            const onChange = (event) => {
+                setAmount(event.target.value); // target : 방금 바뀐 input
+                // console.log(event.target.value); // target : 방금 바뀐 input
+            };
+            const reset = () => setAmount(0);
+            const onInvert = () => {
+                reset();
+                setinverted((current) => (!current)); // inverted이 true라면 (!inverted)는 flase
+            }
+            // label을 input에 연결시키기 위한 for : but, for는 Javascript언어
+            // 따라서 htmlfor라고 써야 함.
+            return (
+                <div>
+                    <h3>KM 2 M</h3>
+                    <div>
+                        <label htmlfor="KM">KM</label> 
+                        <input 
+                            value={inverted ? amount*1.609 : amount} // input의 value는 state의 value와 같아짐
+                            id="km" 
+                            placeholder="km" 
+                            type="number" 
+                            onChange = {onChange} // input의 이벤트 감지
+                            // disabled = {inverted === true} // inverted가 true라면 disabled
+                            disabled = {inverted}
+                        />
+                    </div>
+
+                    <h4>You want to convert {amount}</h4>
+
+                    <div>
+                        <label htmlfor="Miles">Miles</label>
+                        <input 
+                            // inverted리면 state에 있는 값을 그대로 보여주기
+                            value={inverted ? amount : amount * 1.609} // 반올림 해줌
+                            id="miles" 
+                            placeholder="Miles" 
+                            type="number"
+                            onChange = {onChange} // input의 이벤트 감지
+                            // disabled = {inverted === false} // inverted가 false라면 disabled
+                            disabled = {!inverted}
+                        />
+                    </div>
+                    <button onClick={reset}>Reset</button>
+                    <button onClick={onInvert}>{inverted ? "Turn back" : "Invert"}</button>
+                </div>
+            );
+        }
+
+        function APP() {
+            const [index, setIndex] = React.useState("xx");
+            const onSelect = (event) => {
+                setIndex(event.target.value); // 사용자가 어떤 걸 선택했는지 알 수 있음
+            };
+            return (
+                <div>
+                    <h1>Super Converter</h1>
+                    <select value={index} onChange={onSelect}>
+                        <option value="xx">Select your units</option>
+                        <option value="0">Minutes & Hours</option>
+                        <option value="1">Km & Miles</option>
+                    </select>
+                    <hr />
+                    {index === "xx" ? "Please select your units" :null}
+                    {index === "0" ? <MinutesToHours /> :null} 
+                    {index === "1" ? <KmToMiles /> :null} 
+                </div>
+                    //{}안에는 javascript를 사용할 수 있다
+            );
+        }
+
+        const root = document.getElementById("root");
+        ReactDOM.render(<APP />, root);
+
+    </script>
+        
+</html>

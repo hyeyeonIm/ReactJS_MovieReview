@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- react에서는 html 코드를 직접 작성하지 않을 것! -->
+<!-- 대신 Javascript와 React JS를 이용해서 element를 생성할 것 -->
+    <body>
+        <!-- body안에 React element 가져다 주는 방법 -->
+        <div id="root"></div> 
+    </body>
+    <!-- React JS  Import ; React JS : interactivity의 원동력 -->
+    <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+    <!-- react-dom은 모든 react element들을 html body에 둘 수 있게 해줌 -->
+    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+
+    <!--JSX를 사용하기 위한 babel가져오기-->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <script type="text/babel"> // JSX를 이해시키기 위한 type
+        const root = document.getElementById("root");
+        // 클릭을 세기 위한 span를 React element로 생성
+        /**
+        React에서 createElement를 하고 Html태그를 선택한 후, event를 등록하면 됨
+        const h3 = React.createElement(
+            "h3",    
+            //"span", // 유효한 html 태그면 가능 (buttton 등..)
+            {
+                id: "title",
+                onMouseEnter: () => console.log("mouse enter") // event
+            },
+            //{id : "sexy-span", style: { color: 'red' } }, // {} : span의 property ; class name or id ...
+            "Hello I am a span" // contents
+        ); 
+        **/
+
+        // JSX를 사용하여 위의 내용과 동일한 코드를 더 간단하게 작성하기
+        // 단 컴포넌트의 첫글자는 반드시 대문자여야 함!!!!!
+        const Title = () => ( // property는 html 태그의 속성처럼 적으면 됨
+            <h3 id="title" onMouseEnter={() => console.log("mouse enter")}>  
+            Hello I'm a title
+            </h3>
+        );
+
+        /** 위의 함수는 아래와 동일함
+        function Title() {
+            return (
+            <h3 id="title" onMouseEnter={() => console.log("mouse enter")}>  
+            Hello I'm a title
+            </h3>
+            );
+        }
+        **/
+       
+        /**
+        const btn = React.createElement("button", 
+            {
+                onClick: () => console.log("Im clicked"),
+                style: {
+                    backgroundColor: "tomato"
+                }
+            }, // property에다가 event listener를 등록할 수 있음
+            "Click me"); // html에 있는 버튼의 이름과 같을 필요 없음
+        **/
+
+        // JSX를 사용하여 위의 내용과 동일한 코드를 더 간단하게 작성하기
+        // 단 컴포넌트의 첫글자는 반드시 대문자여야 함!!!!!
+        const Button = () => (
+            <button style={{backgroundColor: "tomato"}} 
+            onClick={() => console.log("Im clicked")}>
+                Click me
+            </button>
+        );
+           
+        //ReactDOM.render(span, root); // Show it to the user → render : 여기 React element를 가지고 HTML로 만들어 배치한다는 것
+        // ReactDOM.render(btn, root); 
+        // span과 btn을 둘 다 rend하고 싶다면?
+        // const container = React.createElement("div", null, [h3, btn]) // null값을 가지는 div
+        
+        // JSX를 이용한 코드1
+        // const container = React.createElement("div", null, [Title, Button])
+
+        // JSX를 이용한 코드2 (createElement 사용하지 않기)
+        // 단 컴포넌트의 첫글자는 반드시 대문자여야 함!!!!! ex) Title, Button
+        const Container = () => (
+            <div>
+            <Title />
+            <Button />
+            </div>
+        );
+        ReactDOM.render(<Container />, root); // React element들을 root div에서 보여주라는 뜻
+    </script>
+        
+</html>
+
+<!-- 복잡성을 줄이기 위해서는? -->
+<!-- Javascript에서 시작하고, HTML에서 끝나는 것 -->
+<!-- Javascript를 이용해 element를 생성했고 React JS가 그걸 HTML로 번역하는 것 -->
