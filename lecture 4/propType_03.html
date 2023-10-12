@@ -1,0 +1,77 @@
+<!--Prop-->
+<!--Prop Types : 어떤 타입의 prop을 받고 있는지 체크-->
+
+<!-- 협업 중에 팀원이 꼼꼼히 읽지 않거나 실수하는 상황을 생각 -->
+<!-- 실수 ex. prop에 전송하지 말아야 할 것을 전송하는 실수 -->
+<!-- 실수 ex. text prop에 string 타입을 보내는 대신에 숫자를 넘기는 실수-->
+<!-- 리액트는 이 실수를 모르지만, PropTypes이라는 패키지를 통해서 해결할 수 있음 -->
+
+<!DOCTYPE html>
+<html lang="en">
+    <body>
+        <!-- body안에 React element 가져다 주는 방법 -->
+        <div id="root"></div> 
+    </body>
+    <!-- React JS  Import ; React JS : interactivity의 원동력 -->
+    <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+    <!-- react-dom은 모든 react element들을 html body에 둘 수 있게 해줌 -->
+    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+    <!--JSX를 사용하기 위한 babel가져오기-->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!--Prop types 패키지 -->
+    <script src="https://unpkg.com/prop-types@15.7.2/prop-types.js"></script>
+
+    <script type="text/babel"> // JSX를 이해시키기 위한 type
+
+        // shortcut
+        function Btn({text, fontSize = 16}) { // fontSize를 디폴트로 줄 수도 있음
+
+            return (
+            <button 
+                style={{ 
+                    backgroundColor: "tomato",
+                    color: "white",
+                    padding: "10px 20px",
+                    border: 0,
+                    borderRadius: 10,
+                    fontSize,
+                    }}
+                >
+                {text}
+            </button>
+            );
+        }
+
+        // 리액트에게 prop 타입 설명
+        Btn.propTypes = { // text만 Required로 설정
+            text: PropTypes.string.isRequired,
+            fontSize: PropTypes.number,
+        }
+
+        function APP() {
+            return (
+                <div> 
+                    <Btn text="Save Changes" fontSize={18} /> 
+                    <Btn text={"Continue"} />
+                </div>
+            ); 
+        }
+
+        const root = document.getElementById("root");
+        ReactDOM.render(<APP />, root);
+
+    </script>
+        
+</html>
+
+<!-- function Btn(props){ //props는 첫 번째이자 유일한 인자이다. Btn이 전달 받는 유일한 인자.
+    console.log(props)
+    return <button style={{ // 이런 스타일들을 가지는 단 하나의 컴포넌트를 가질 수 있다면 좋겠다. 그럼 복붙 안 해도 됨
+        backgroundColor: "tomato",
+        color: "white",
+        padding: "10px 20px",
+        border: 0,
+        borderRadius: 10,
+    }}>{props.banana}
+    </button>
+} -->

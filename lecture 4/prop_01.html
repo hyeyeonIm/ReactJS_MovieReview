@@ -1,0 +1,60 @@
+<!--Prop-->
+<!-- Prop : 부모 컴포넌트로부터 자식 컴포넌트에 데이터를 보낼 수 있게 해주는 방법 -->
+
+<!DOCTYPE html>
+<html lang="en">
+    <body>
+        <!-- body안에 React element 가져다 주는 방법 -->
+        <div id="root"></div> 
+    </body>
+    <!-- React JS  Import ; React JS : interactivity의 원동력 -->
+    <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+    <!-- react-dom은 모든 react element들을 html body에 둘 수 있게 해줌 -->
+    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+    <!--JSX를 사용하기 위한 babel가져오기-->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <script type="text/babel"> // JSX를 이해시키기 위한 type
+
+        // shortcut
+        function Btn({text, big}){ 
+            return <button style={{ 
+                backgroundColor: "tomato",
+                color: "white",
+                padding: "10px 20px",
+                border: 0,
+                borderRadius: 10,
+                fontSize: big ? 18 : 16, // Sytle안에서 prop 기반으로 if else 사용 가능
+            }}>
+            {text}
+            </button>
+        }
+
+        function APP() {
+            // 하나의 Btn 컴포넌트로s 같은 스타일의 버튼 사용하기
+            return (
+                <div>
+                    <Btn text="Save Changes" big={true} /> 
+                    <Btn text="Continue" big={false}/> 
+                </div>
+            ); // Btn 함수를 호출해서 우리가 넣어둔 모든 것들을 첫 번째 인자로서 넣을 것
+        }
+
+        const root = document.getElementById("root");
+        ReactDOM.render(<APP />, root);
+
+    </script>
+        
+</html>
+
+<!-- function Btn(props){ //props는 첫 번째이자 유일한 인자이다. Btn이 전달 받는 유일한 인자.
+    console.log(props)
+    return <button style={{ // 이런 스타일들을 가지는 단 하나의 컴포넌트를 가질 수 있다면 좋겠다. 그럼 복붙 안 해도 됨
+        backgroundColor: "tomato",
+        color: "white",
+        padding: "10px 20px",
+        border: 0,
+        borderRadius: 10,
+    }}>{props.banana}
+    </button>
+} -->
